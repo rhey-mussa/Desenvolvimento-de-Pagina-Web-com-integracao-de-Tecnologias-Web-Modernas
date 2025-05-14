@@ -104,7 +104,10 @@
         const chat = document.getElementById('chat');
         const form = document.getElementById('chat-form');
         const mensagemInput = document.getElementById('mensagem');
-        const ws = new WebSocket('ws://localhost:3001');
+        const wsUrl = window.location.hostname.includes('onrender.com') ? 
+            `wss://${window.location.hostname}` : 
+            'ws://localhost:3001';
+        const ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {
             console.log('Conectado ao servidor WebSocket');
@@ -119,6 +122,12 @@
                 mensagemDiv.textContent = `${data.tipoUsuario}:${data.remetente}:${data.mensagem}`;
                 chat.appendChild(mensagemDiv);
                 chat.scrollTop = chat.scrollHeight;
+            } else if (data.type === 'erro') {
+                const erroDiv = document.createElement('div');
+                erroDiv.className = 'text-danger mb-2';
+                erroDiv.textContent = `Erro: ${data.message}`;
+                chat.appendChild(erroDiv);
+                chat.scrollTop = chat.scrollHeight;
             }
         };
 
@@ -127,6 +136,15 @@
             const erroDiv = document.createElement('div');
             erroDiv.className = 'text-danger mb-2';
             erroDiv.textContent = 'Erro na conexão com o servidor.';
+            chat.appendChild(erroDiv);
+            chat.scrollTop = chat.scrollHeight;
+        };
+
+        ws.onclose = () => {
+            console.log('Conexão WebSocket fechada');
+            const erroDiv = document.createElement('div');
+            erroDiv.className = 'text-danger mb-2';
+            erroDiv.textContent = 'Conexão com o servidor perdida.';
             chat.appendChild(erroDiv);
             chat.scrollTop = chat.scrollHeight;
         };

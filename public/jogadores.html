@@ -32,65 +32,65 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function configurarNavbar() {
-            const adminNome = sessionStorage.getItem('adminNome');
-            const userNome = sessionStorage.getItem('userNome');
-            const navLinks = document.getElementById('nav-links');
-            const userNomeElement = document.getElementById('user-nome');
+    const adminNome = sessionStorage.getItem('adminNome');
+    const userNome = sessionStorage.getItem('userNome');
+    const navLinks = document.getElementById('nav-links');
+    const userNomeElement = document.getElementById('user-nome');
 
-            if (!adminNome && !userNome) {
-                window.location.href = 'login.html';
-                return;
-            }
+    if (!adminNome && !userNome) {
+        window.location.href = 'login.html';
+        return;
+    }
 
-            if (adminNome && !userNome) {
-                navLinks.innerHTML = `
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('cadastro.html') ? ' active' : ''}" href="cadastro.html">Cadastrar Jogador</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('visualizar.html') ? ' active' : ''}" href="visualizar.html">Visualizar Jogadores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('chat.html') ? ' active' : ''}" href="chat.html">Chat de Consultoria</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('estatisticas.html') ? ' active' : ''}" href="estatisticas.html">Estatísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('dicas.html') ? ' active' : ''}" href="dicas.html">Dicas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('sobre.html') ? ' active' : ''}" href="sobre.html">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('jogadores.html') ? ' active' : ''}" href="jogadores.html">Jogadores Europeus</a>
-                    </li>
-                `;
-                userNomeElement.textContent = `Administrador ${adminNome}`;
-            } else if (userNome && !adminNome) {
-                navLinks.innerHTML = `
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('visualizar.html') ? ' active' : ''}" href="visualizar.html">Visualizar Jogadores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('chat.html') ? ' active' : ''}" href="chat.html">Chat de Consultoria</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('estatisticas.html') ? ' active' : ''}" href="estatisticas.html">Estatísticas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('dicas.html') ? ' active' : ''}" href="dicas.html">Dicas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('sobre.html') ? ' active' : ''}" href="sobre.html">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link${window.location.pathname.includes('jogadores.html') ? ' active' : ''}" href="jogadores.html">Jogadores Europeus</a>
-                    </li>
-                `;
-                userNomeElement.textContent = `Usuário ${userNome}`;
-            }
-        }
+    if (adminNome && !userNome) {
+        navLinks.innerHTML = `
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('cadastro.html') ? ' active' : ''}" href="cadastro.html">Cadastrar Jogador</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('visualizar.html') ? ' active' : ''}" href="visualizar.html">Visualizar Jogadores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('conversar-admin.html') ? ' active' : ''}" href="conversar-admin.html">Conversar com Usuários</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('estatisticas.html') ? ' active' : ''}" href="estatisticas.html">Estatísticas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('dicas.html') ? ' active' : ''}" href="dicas.html">Dicas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('sobre.html') ? ' active' : ''}" href="sobre.html">Sobre</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('jogadores.html') ? ' active' : ''}" href="jogadores.html">Jogadores Europeus</a>
+            </li>
+        `;
+        userNomeElement.textContent = `Administrador ${adminNome}`;
+    } else if (userNome && !adminNome) {
+        navLinks.innerHTML = `
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('visualizar.html') ? ' active' : ''}" href="visualizar.html">Visualizar Jogadores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('chat.html') ? ' active' : ''}" href="chat.html">Chat de Consultoria</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('estatisticas.html') ? ' active' : ''}" href="estatisticas.html">Estatísticas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('dicas.html') ? ' active' : ''}" href="dicas.html">Dicas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('sobre.html') ? ' active' : ''}" href="sobre.html">Sobre</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link${window.location.pathname.includes('jogadores.html') ? ' active' : ''}" href="jogadores.html">Jogadores Europeus</a>
+            </li>
+        `;
+        userNomeElement.textContent = `Usuário ${userNome}`;
+    }
+}
 
         configurarNavbar();
 

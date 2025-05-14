@@ -4,14 +4,14 @@ const path = require('path');
 const routes = require('./routes');
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001; // Porta dinâmica para Render
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', routes);
 
-const server = app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+const server = app.listen(port, '0.0.0.0', () => {
+    console.log(`Servidor rodando em ${process.env.PORT ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}` : `http://localhost:${port}`}`);
 });
 
 const wss = new WebSocket.Server({ server });

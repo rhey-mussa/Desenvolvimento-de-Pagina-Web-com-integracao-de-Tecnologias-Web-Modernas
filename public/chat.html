@@ -50,7 +50,6 @@
             }
 
             if (adminNome && !userNome) {
-                // Redirecionar administradores para conversar-admin.html
                 window.location.href = 'conversar-admin.html';
                 return;
             } else if (userNome && !adminNome) {
@@ -84,7 +83,10 @@
         const chat = document.getElementById('chat');
         const form = document.getElementById('chat-form');
         const mensagemInput = document.getElementById('mensagem');
-        const ws = new WebSocket('ws://localhost:3001');
+        const wsUrl = window.location.hostname.includes('onrender.com') ? 
+            `wss://${window.location.hostname}` : 
+            'ws://localhost:3001';
+        const ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {
             console.log('Conectado ao servidor WebSocket');
@@ -98,6 +100,12 @@
                 respostaDiv.textContent = `Bot: ${data.message}`;
                 chat.appendChild(respostaDiv);
                 chat.scrollTop = chat.scrollHeight;
+            } else if (data.type === 'erro') {
+                const erroDiv = document.createElement('div');
+                erroDiv.className = 'text-danger mb-2';
+                erroDiv.textContent = `Erro: ${data.message}`;
+                chat.appendChild(erroDiv);
+                chat.scrollTop = chat.scrollHeight;
             }
         };
 
@@ -106,6 +114,15 @@
             const erroDiv = document.createElement('div');
             erroDiv.className = 'text-danger mb-2';
             erroDiv.textContent = 'Erro na conexão com o servidor.';
+            chat.appendChild(erroDiv);
+            chat.scrollTop = chat.scrollHeight;
+        };
+
+        ws.onclose = () => {
+            console.log('Conexão WebSocket fechada');
+            const erroDiv = document.createElement('div');
+            erroDiv.className = 'text-danger mb-2';
+            erroDiv.textContent = 'Conexão com o servidor perdida.';
             chat.appendChild(erroDiv);
             chat.scrollTop = chat.scrollHeight;
         };

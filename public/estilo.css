@@ -1,0 +1,86 @@
+/* Importar fonte Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+
+/* Aplicar fonte globalmente */
+body, h1, h2, h3, p, a, button, input, label, th, td {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* Hovers para botões */
+.btn {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-primary:hover {
+    background-color: #005f99;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-danger:hover {
+    background-color: #b02a37;
+}
+
+/* Hovers para links da navbar */
+.nav-link {
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #005f99 !important;
+    text-decoration: underline !important;
+}
+
+/* Hovers para linhas da tabela */
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    cursor: pointer;
+}
+
+.table tbody tr.recuperado:hover {
+    background-color: #a3cfbb !important; /* Verde mais escuro */
+}
+
+.table tbody tr.disponivel:hover {
+    background-color: #ffda6a !important; /* Amarelo mais escuro */
+}
+
+/* Estilo para tabelas */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 500;
+}
+
+/* Ajuste para formulários */
+.form-control {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Estilo para cartões em estatísticas */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

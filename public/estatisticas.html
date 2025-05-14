@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Estatísticas - Gestão de Jogadores de Futebol</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="login.html">Gestão de Jogadores</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" id="nav-links"></ul>
+                <span id="user-nome" class="ms-auto navbar-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Estatísticas de Lesões</h1>
+        <button id="gerar-estatisticas" class="btn btn-primary mb-3">Gerar Estatísticas</button>
+        <div id="estatisticas" class="row">
+            <div class="col-md-6">
+                <h3>Total de Jogadores</h3>
+                <p id="total-jogadores" class="text-muted">Clique em "Gerar Estatísticas" para visualizar.</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Jogadores Lesionados</h3>
+                <p id="jogadores-lesionados" class="text-muted">Clique em "Gerar Estatísticas" para visualizar.</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Jogadores Recuperados</h3>
+                <p id="jogadores-recuperados" class="text-muted">Clique em "Gerar Estatísticas" para visualizar.</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Tipos de Lesões</h3>
+                <ul id="tipos-lesoes" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function configurarNavbar() {
+            const adminNome = sessionStorage.getItem('adminNome');
+            const userNome = sessionStorage.getItem('userNome');
+            const navLinks = document.getElementById('nav-links');
+            const userNomeElement = document.getElementById('user-nome');
+
+            if (!adminNome && !userNome) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (adminNome && !userNome) {
+                navLinks.innerHTML = `
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('cadastro.html') ? ' active' : ''}" href="cadastro.html">Cadastrar Jogador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('visualizar.html') ? ' active' : ''}" href="visualizar.html">Visualizar Jogadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('chat.html') ? ' active' : ''}" href="chat.html">Chat de Consultoria</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('estatisticas.html') ? ' active' : ''}" href="estatisticas.html">Estatísticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('dicas.html') ? ' active' : ''}" href="dicas.html">Dicas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('sobre.html') ? ' active' : ''}" href="sobre.html">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('jogadores.html') ? ' active' : ''}" href="jogadores.html">Jogadores Europeus</a>
+                    </li>
+                `;
+                userNomeElement.textContent = `Administrador ${adminNome}`;
+            } else if (userNome && !adminNome) {
+                navLinks.innerHTML = `
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('visualizar.html') ? ' active' : ''}" href="visualizar.html">Visualizar Jogadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('chat.html') ? ' active' : ''}" href="chat.html">Chat de Consultoria</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('estatisticas.html') ? ' active' : ''}" href="estatisticas.html">Estatísticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('dicas.html') ? ' active' : ''}" href="dicas.html">Dicas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('sobre.html') ? ' active' : ''}" href="sobre.html">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link${window.location.pathname.includes('jogadores.html') ? ' active' : ''}" href="jogadores.html">Jogadores Europeus</a>
+                    </li>
+                `;
+                userNomeElement.textContent = `Usuário ${userNome}`;
+            }
+        }
+
+        configurarNavbar();
+
+        document.getElementById('gerar-estatisticas').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/jogadores');
+                if (!response.ok) {
+                    throw new Error(`Erro ao buscar jogadores: ${response.status}`);
+                }
+                const jogadores = await response.json();
+
+                // Total de jogadores
+                document.getElementById('total-jogadores').textContent = jogadores.length;
+
+                // Jogadores lesionados e recuperados
+                const lesionados = jogadores.filter(j => !j.dataRecuperacao).length;
+                const recuperados = jogadores.filter(j => j.dataRecuperacao).length;
+                document.getElementById('jogadores-lesionados').textContent = lesionados;
+                document.getElementById('jogadores-recuperados').textContent = recuperados;
+
+                // Tipos de lesões
+                const tiposLesoes = {};
+                jogadores.forEach(j => {
+                    tiposLesoes[j.tipoLesao] = (tiposLesoes[j.tipoLesao] || 0) + 1;
+                });
+
+                const tiposLesoesList = document.getElementById('tipos-lesoes');
+                tiposLesoesList.innerHTML = '';
+                for (const [tipo, quantidade] of Object.entries(tiposLesoes)) {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.textContent = `${tipo}: ${quantidade}`;
+                    tiposLesoesList.appendChild(li);
+                }
+            } catch (error) {
+                console.error('Erro ao gerar estatísticas:', error);
+                document.getElementById('estatisticas').innerHTML = '<p class="text-danger">Erro ao carregar estatísticas.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

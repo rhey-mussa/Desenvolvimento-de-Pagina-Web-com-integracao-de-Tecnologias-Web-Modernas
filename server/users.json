@@ -1,0 +1,32 @@
+[
+  {
+    "email": "teste@teste.com",
+    "nome": "Teste",
+    "senha": "1234"
+  },
+  {
+    "email": "Vitor@gmail.com",
+    "nome": "Victor",
+    "senha": "123"
+  },
+  {
+    "email": "Antonio@example.com",
+    "nome": "Antonio",
+    "senha": "123"
+  },
+  {
+    "email": "Antonio@example.com",
+    "nome": "Anastacia",
+    "senha": "12334"
+  },
+  {
+    "email": "pao@example.com",
+    "nome": "pao",
+    "senha": "123"
+  },
+  {
+    "email": "JoseMaria@gmail.com",
+    "nome": "Jose Maria",
+    "senha": "12345"
+  }
+]

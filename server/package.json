@@ -1,0 +1,17 @@
+{
+  "name": "projeto-pagina-web",
+  "version": "1.0.0",
+  "description": "Sistema de gestão de jogadores de futebol",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "uuid": "^9.0.1",
+    "ws": "^8.13.0"
+  },
+  "author": "Rhey Mussa",
+  "license": "ISC"
+}
